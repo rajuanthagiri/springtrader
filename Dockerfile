@@ -19,7 +19,6 @@ COPY tools tools
 
 RUN ./gradlew clean build release
 ## Builder stage end
-
 ## vFabric base stage
 FROM centos:centos6 as vfabric
 ENV JAVA_HOME=/usr
@@ -33,7 +32,6 @@ RUN mkdir -p /etc/vmware/vfabric/ && \
 RUN rpm -ivhf http://repo.vmware.com/pub/rhel6/vfabric/5.1/vfabric-5.1-repo-5.1-1.noarch.rpm && \
     yum install wget unzip java-1.7.0-openjdk-devel vfabric-tc-server-standard -y
 ## vFabric base stage end
-
 ## vFabric appserver stage
 FROM vfabric as runner
 
@@ -67,7 +65,6 @@ WORKDIR /app
 
 ENTRYPOINT ["/opt/vmware/vfabric-tc-server-standard/springtrader/bin/tcruntime-ctl.sh", "run", "springtrader"]
 ## vFabric appserver stage end
-
 ## SQLFire stage
 FROM vfabric as sqlfdb
 RUN yum install vfabric-sqlfire -y
